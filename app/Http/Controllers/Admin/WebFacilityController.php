@@ -15,32 +15,30 @@ class WebFacilityController extends Controller
     }
 public function create()
 {
-    // أضف هذا السطر
     $facilities = WebFacility::all(); 
 
     return view('admin.Facilities.create', compact('facilities'));
 }
 
 
-   public function store(Request $request)
+ public function store(Request $request)
 {
-    $data = $request->validate([
+   
+    $validated = $request->validate([
         'name' => 'required|string|max:255',
         'description' => 'required|string',
-        'image' => 'nullable|image',
-        'bg_color' => 'nullable|string|max:7',
-        'text_color' => 'nullable|string|max:7',
+        'image' => 'nullable|image|max:2048',
+        'bg_color' => 'nullable|string|max:20',
+        'text_color' => 'nullable|string|max:20',
     ]);
 
-    // ✅ حفظ الصورة
     if ($request->hasFile('image')) {
-        $imagePath = $request->file('image')->store('facilities', 'public');
-        $data['image'] = $imagePath;
+        $validated['image'] = $request->file('image')->store('facilities', 'public');
     }
 
-    WebFacility::create($data);
+    WebFacility::create($validated);
 
-    return redirect()->back()->with('success', 'Facility ajoutée avec succès.');
+    return redirect()->route('admin.facilities.index')->with('success', 'Facility ajoutée avec succès.');
 }
 
 

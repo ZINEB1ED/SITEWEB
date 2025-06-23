@@ -20,18 +20,24 @@ class WebSliderController extends Controller
         return view('admin.sliders.create');
     }
 
-    public function store(Request $request)
-    {
-        $validated = $request->validate([
-            'image' => 'required|string|max:255', 
-            'title' => 'required|string|max:255',
-            'description' => 'nullable|string',
-            'status' => 'required|boolean',
-        ]);
+  public function store(Request $request)
+{
+    $validated = $request->validate([
+        'title' => 'required|string|max:255',
+        'description' => 'nullable|string',
+        'image' => 'required|image|max:2048',
+        'status' => 'required|boolean',
+    ]);
 
-        WebSlider::create($validated);
-        return redirect()->route('admin.sliders.index')->with('success', 'Slider ajouté avec succès');
+    if ($request->hasFile('image')) {
+        $validated['image'] = $request->file('image')->store('sliders', 'public');
     }
+
+    WebSlider::create($validated);
+
+    
+    return redirect()->route('admin.sliders.index')->with('success', 'Slider ajouté avec succès.');
+}
 
     public function show(WebSlider $webSlider)
     {

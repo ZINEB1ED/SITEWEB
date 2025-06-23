@@ -7,7 +7,6 @@ use App\Http\Controllers\Admin\WebFacilityController;
 use App\Http\Controllers\Admin\WebReviewController;
 use App\Http\Controllers\Admin\WebClasseController;
 
-// صفحات عامة
 Route::view('/', 'home')->name('home');
 Route::view('/service', 'service')->name('service');
 Route::view('/contact', 'contact')->name('contact');
@@ -22,13 +21,10 @@ Route::post('/contact', function(Request $request) {
     return back()->with('success', 'Merci pour votre message, nous vous contacterons bientôt.');
 })->name('contact');
 
-// تسجيل الدخول
 Route::get('/admin/login', [AdminAuthController::class, 'showLoginForm'])->name('login');
 Route::post('/admin/login', [AdminAuthController::class, 'login'])->name('login');
 Route::post('/admin/logout', [AdminAuthController::class, 'logout'])->name('admin.logout');
 
-
-// Routes admin
 Route::middleware('auth:admin')->prefix('admin')->name('admin.')->group(function () {
     Route::get('/dashboard', fn() => view('admin.dashboard'))->name('dashboard');
 

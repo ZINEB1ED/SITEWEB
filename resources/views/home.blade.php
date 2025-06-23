@@ -9,8 +9,8 @@
     padding: 0;
     height: 100%;
     font-family: 'Poppins', sans-serif;
-    background: #fdf6e3; /* لون خلفية دافئ فاتح */
-    color: #4a3c1f; /* بني داكن */
+    background: #fdf6e3;
+    color: #4a3c1f; 
   }
 
   .hero {

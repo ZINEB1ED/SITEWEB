@@ -5,7 +5,6 @@
 @section('content')
 <div style="max-width: 1100px; margin: 40px auto; padding: 0 20px; font-family: 'Roboto', sans-serif;">
 
-    {{-- Bouton retour Dashboard --}}
     <div style="margin-bottom: 20px;">
         <a href="{{ route('admin.dashboard') }}" class="btn" style="background-color: #6c757d;">⬅ Retour au Dashboard</a>
     </div>

@@ -3,56 +3,130 @@
 @section('title', 'Ajouter un Slider')
 
 @section('content')
-<div style="max-width: 800px; margin: 40px auto; padding: 0 20px; font-family: 'Roboto', sans-serif;">
-    <h1 style="font-size: 2rem; margin-bottom: 30px; color: #2d3748;">Ajouter un Slider</h1>
+<div class="form-container">
+    <h1 class="form-header">📷 Nouveau Slider</h1>
+<form method="POST" action="{{ route('admin.sliders.store') }}" enctype="multipart/form-data" class="custom-form">
 
-    <form method="POST" action="{{ route('admin.sliders.store') }}" style="background: #fff; padding: 30px; border-radius: 10px; box-shadow: 0 4px 16px rgba(0,0,0,0.05);">
         @csrf
 
-        <div style="margin-bottom: 20px;">
-            <label for="image" style="display:block; font-weight: bold; margin-bottom: 6px;">Image (URL)</label>
-            <input type="text" id="image" name="image" required style="width: 100%; padding: 12px; border: 1.5px solid #ccc; border-radius: 8px; font-size: 1rem;">
+        <div class="input-group">
+            <label for="image"><i class="fas fa-image"></i> Image</label>
+            <input type="file" id="image" name="image" required>
         </div>
 
-        <div style="margin-bottom: 20px;">
-            <label for="title" style="display:block; font-weight: bold; margin-bottom: 6px;">Titre</label>
-            <input type="text" id="title" name="title" required style="width: 100%; padding: 12px; border: 1.5px solid #ccc; border-radius: 8px; font-size: 1rem;">
+        <div class="input-group">
+            <label for="title"><i class="fas fa-heading"></i> Titre</label>
+            <input type="text" id="title" name="title" required>
         </div>
 
-        <div style="margin-bottom: 20px;">
-            <label for="description" style="display:block; font-weight: bold; margin-bottom: 6px;">Description</label>
-            <textarea id="description" name="description" style="width: 100%; padding: 12px; border: 1.5px solid #ccc; border-radius: 8px; font-size: 1rem; min-height: 100px;"></textarea>
+        <div class="input-group">
+            <label for="description"><i class="fas fa-align-left"></i> Description</label>
+            <textarea id="description" name="description"></textarea>
         </div>
 
-        <div style="margin-bottom: 30px;">
-            <label for="status" style="display:block; font-weight: bold; margin-bottom: 6px;">Statut</label>
-            <select name="status" id="status" style="width: 100%; padding: 12px; border: 1.5px solid #ccc; border-radius: 8px; font-size: 1rem;">
-                <option value="1">Actif</option>
-                <option value="0">Inactif</option>
+        <div class="input-group">
+            <label for="status"><i class="fas fa-toggle-on"></i> Statut</label>
+            <select name="status" id="status">
+                <option value="1">✅ Actif</option>
+                <option value="0">⛔ Inactif</option>
             </select>
         </div>
 
-        <button type="submit" class="btn">✅ Enregistrer</button>
+        <button type="submit" class="submit-btn"><i class="fas fa-check-circle"></i> Enregistrer</button>
     </form>
+
 </div>
+@if(session('success'))
+    <div class="alert alert-success">
+        {{ session('success') }}
+    </div>
+@endif
+
 @endsection
 
 @push('styles')
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+
 <style>
-    .btn {
-        background-color: #c9a94a;
-        color: white;
-        border: none;
-        padding: 12px 28px;
-        border-radius: 25px;
-        font-weight: bold;
-        font-size: 1rem;
-        text-align: center;
-        cursor: pointer;
-        transition: background-color 0.3s ease;
+    body {
+        background: linear-gradient(120deg, #f6f9fc, #e0eafc);
+        font-family: 'Poppins', sans-serif;
     }
-    .btn:hover {
-        background-color: #a88939;
+
+    .form-container {
+        max-width: 550px;
+        margin: 60px auto;
+        background-color: white;
+        border-radius: 20px;
+        padding: 40px;
+        box-shadow: 0 8px 30px rgba(0, 0, 0, 0.1);
+    }
+
+    .form-header {
+        text-align: center;
+        font-size: 2rem;
+        font-weight: 600;
+        margin-bottom: 30px;
+        color: #4b5563;
+    }
+
+    .custom-form .input-group {
+        margin-bottom: 22px;
+    }
+
+    .custom-form label {
+        font-weight: 600;
+        margin-bottom: 8px;
+        display: block;
+        color: #374151;
+    }
+
+    .custom-form input,
+    .custom-form select,
+    .custom-form textarea {
+        width: 100%;
+        padding: 12px 14px;
+        border: 1.5px solid #d1d5db;
+        border-radius: 10px;
+        font-size: 1rem;
+        background-color: #f9fafb;
+        transition: 0.3s border-color ease;
+    }
+
+    .custom-form input:focus,
+    .custom-form textarea:focus,
+    .custom-form select:focus {
+        border-color: #6366f1;
+        outline: none;
+        background-color: #fff;
+    }
+
+    .custom-form textarea {
+        min-height: 110px;
+        resize: vertical;
+    }
+
+    .submit-btn {
+        display: block;
+        width: 100%;
+        background: linear-gradient(to right, #6366f1, #8b5cf6);
+        color: white;
+        padding: 14px;
+        border: none;
+        border-radius: 40px;
+        font-size: 1rem;
+        font-weight: bold;
+        cursor: pointer;
+        transition: background 0.3s ease;
+    }
+
+    .submit-btn:hover {
+        background: linear-gradient(to right, #4f46e5, #7c3aed);
+    }
+
+    .fas {
+        margin-right: 8px;
     }
 </style>
 @endpush
